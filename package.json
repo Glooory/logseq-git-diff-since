@@ -1,0 +1,30 @@
+{
+  "name": "logseq-git-diff-since",
+  "description": "Show git diff messages for a time duration",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/index.html",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite build --watch",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@logseq/libs": "0.0.15",
+    "diff2html": "^3.4.35",
+    "element-plus": "^2.3.8",
+    "vue": "^3.3.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.1",
+    "vite": "^4.4.0"
+  },
+  "logseq": {
+    "id": "glooory-git-diff-since",
+    "title": "Git diff since",
+    "icon": "./icon.png"
+  }
+}

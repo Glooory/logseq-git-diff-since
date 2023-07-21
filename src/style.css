@@ -1,0 +1,21 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+#app {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+.body-wrap {
+  width: 100%;
+  position: absolute;
+}
+
+h1 {
+  font-size: 20px;
+  text-align: center;
+}
