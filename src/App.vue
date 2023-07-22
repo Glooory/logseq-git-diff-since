@@ -1,5 +1,5 @@
 <template>
-  <div class="diffs-panel">
+  <div v-if="ready" class="diffs-panel">
     <div class="diffs-panel-content">
       <div class="toolbar">
         <span>What changed since </span>
@@ -23,6 +23,7 @@ import { getGitDiffSince } from './utils/git.js';
 import { timeUnits, timeConfigs } from './constants/time.js';
 import Diffs from './components/Diffs.vue';
 
+const ready = ref(false);
 const currTimeDuration = ref(1);
 const currTimeUnit = ref(timeUnits[0]);
 const diffHtml = ref('');
@@ -57,8 +58,22 @@ const onTimeUnitChange = (e) => {
 
 const onClosePanelBtnClick = () => logseq.hideMainUI();
 
+const onThemeChange = (theme) => {
+  if (theme === 'dark') {
+    document.querySelector('html').classList.add('dark');
+  } else {
+    document.querySelector('html').classList.remove('dark');
+  }
+}
+
 onMounted(() => {
-  queryGitDiffSince();
+  const theme = parent.document.querySelector('html').getAttribute('data-theme');
+  onThemeChange(theme);
+  logseq.App.onThemeModeChanged(e => onThemeChange(e.mode));
+  setTimeout(() => {
+    ready.value = true;
+    queryGitDiffSince();
+  }, 0);
 });
 </script>
 
@@ -68,7 +83,7 @@ onMounted(() => {
   width: 100vw;
   height: 100vh;
   padding: 48px;
-  background: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, .2);
   box-sizing: border-box;
 }
 
@@ -78,7 +93,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   border-radius: 8px;
-  background-clip: border-box;
   box-shadow: 0 16px 48px 16px rgba(0, 0, 0, .08), 0 12px 32px rgba(0, 0, 0, .12), 0 8px 16px -8px rgba(0, 0, 0, .16);
 }
 
@@ -92,10 +106,14 @@ onMounted(() => {
   padding: 0 16px;
   box-sizing: border-box;
   box-shadow: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);;
-  background: #eeeeee;
+  background-color: #eeeeee;
   border-top-left-radius: inherit;
   border-top-right-radius: inherit;
   z-index: 2;
+}
+
+html.dark .toolbar {
+  background-color: #023643;
 }
 
 .time-select {
