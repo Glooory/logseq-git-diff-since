@@ -23,7 +23,7 @@
     "vite": "^4.4.0"
   },
   "logseq": {
-    "id": "glooory-git-diff-since",
+    "id": "git-diff-since",
     "title": "Git diff since",
     "icon": "./icon.png"
   }

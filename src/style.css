@@ -19,3 +19,34 @@ h1 {
   font-size: 20px;
   text-align: center;
 }
+
+html.dark .code-diff .d2h-file-header,
+html.dark .code-diff .d2h-code-side-linenumber,
+html.dark .code-diff .d2h-code-linenumber,
+html.dark .code-diff .d2h-info,
+html.dark .code-diff .d2h-tag,
+html.dark .code-diff .d2h-emptyplaceholder,
+html.dark .code-diff .d2h-code-side-emptyplaceholder {
+  background-color: #272822;
+  color: #d0d0d0;
+}
+
+html.dark .code-diff span {
+  color: #d0d0d0;
+}
+
+html.dark .code-diff .d2h-del {
+  background-color: #7d4e50;
+}
+
+html.dark .code-diff del {
+  background-color: #a07c7e;
+}
+
+html.dark .code-diff .d2h-ins {
+  background-color: #748a74;
+}
+
+html.dark .code-diff ins {
+  background-color: #177016;
+}

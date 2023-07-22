@@ -1,5 +1,5 @@
 <template>
-  <div class="diffs-wrap">
+  <div class="diffs-wrap code-diff">
     <div v-if="!diffHtml" class="no-changes-tip"><span>No changes found!</span></div>
     <div v-else v-html="diffHtml"/>
   </div>
@@ -32,9 +32,13 @@ const diffHtml = computed(() => {
   flex-grow: 1;
   padding: 16px;
   overflow: auto;
-  background: white;
+  background-color: white;
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
+}
+
+html.dark .diffs-wrap {
+  background-color: #002b36;
 }
 
 .no-changes-tip {
