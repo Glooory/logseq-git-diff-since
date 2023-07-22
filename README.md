@@ -4,9 +4,9 @@
 
 ### Demo
 
-![demo.jpg](demo.jpg)
+![demo.jpg](./demo.jpg)
 
-![demo.gif](demo.gif)
+![demo.gif](./demo.gif)
 
 ### Licence
 
