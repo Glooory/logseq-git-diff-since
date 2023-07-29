@@ -2,6 +2,9 @@
   <div v-if="ready" class="diffs-panel">
     <div class="diffs-panel-content">
       <div class="toolbar">
+        <el-button class="refresh-btn" @click="onRefreshBtnClick">
+          <img class="refresh-icon" :src="refreshIcon" alt="refresh-icon" />
+        </el-button>
         <span>What changed since </span>
         <el-select class="time-select" placeholder="Select" v-model="currTimeDuration" @change="onTimeDurationChange">
           <el-option v-for="item in timeConfigs[currTimeUnit].values" :key="item" :label="item" :value="item" />
@@ -22,6 +25,7 @@ import { computed, onMounted, ref } from 'vue';
 import { getGitDiffSince } from './utils/git.js';
 import { timeUnits, timeConfigs } from './constants/time.js';
 import Diffs from './components/Diffs.vue';
+import refreshIcon from './assets/ic_refresh.svg';
 
 const ready = ref(false);
 const currTimeDuration = ref(1);
@@ -50,6 +54,10 @@ const queryGitDiffSince = () => {
 const resetAndQuery = () => {
   currTimeDuration.value = 1;
   currTimeUnit.value = timeUnits[0];
+  queryGitDiffSince();
+}
+
+const onRefreshBtnClick = () => {
   queryGitDiffSince();
 }
 
@@ -121,6 +129,20 @@ onMounted(() => {
 
 html.dark .toolbar {
   background-color: #023643;
+}
+
+.refresh-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+}
+
+.refresh-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .time-select {
