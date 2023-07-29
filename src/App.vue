@@ -12,7 +12,7 @@
         <el-select class="unit-select" placeholder="Select" v-model="currTimeUnit" @change="onTimeUnitChange">
           <el-option v-for="item in timeUnits" :key="item" :label="item" :value="item" />
         </el-select>
-        ago
+        <span v-if="currTimeUnit !== 'commit'">ago</span>
         <el-button class="close-btn" @click="onClosePanelBtnClick"><span class="close-btn-icon">X</span></el-button>
       </div>
       <Diffs :diffContent="diffHtml" />
@@ -23,22 +23,27 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { getGitDiffSince } from './utils/git.js';
-import { timeUnits, timeConfigs } from './constants/time.js';
+import { timeUnits, defaultTimeUnit, timeConfigs } from './constants/time.js';
 import Diffs from './components/Diffs.vue';
 import refreshIcon from './assets/ic_refresh.svg';
 
 const ready = ref(false);
 const currTimeDuration = ref(1);
-const currTimeUnit = ref(timeUnits[0]);
+const currTimeUnit = ref(defaultTimeUnit);
 const diffHtml = ref('');
-const sinceParam = computed(() => `${currTimeDuration.value} ${currTimeUnit.value} ago`);
+const gitCommandParams = computed(() => {
+  if (currTimeUnit.value === 'commit') {
+    return ['diff'];
+  }
+  return ['log', `--since="${currTimeDuration.value} ${currTimeUnit.value} ago"`, '-p'];
+});
 
 const handleGetDiffFailed = (err) => {
   logseq.App.showMsg(`Git whatchanged failed\n${err}`);
 }
 
 const queryGitDiffSince = () => {
-  getGitDiffSince(sinceParam.value)
+  getGitDiffSince(gitCommandParams.value)
     .then(res => {
       if (res.exitCode === 0) {
         diffHtml.value = res.stdout;
@@ -53,7 +58,7 @@ const queryGitDiffSince = () => {
 
 const resetAndQuery = () => {
   currTimeDuration.value = 1;
-  currTimeUnit.value = timeUnits[0];
+  currTimeUnit.value = defaultTimeUnit;
   queryGitDiffSince();
 }
 
@@ -146,7 +151,7 @@ html.dark .toolbar {
 }
 
 .time-select {
-  width: 60px;
+  width: 70px;
   margin: 0 8px;
 }
 

@@ -15,10 +15,10 @@ export const checkIsGitRepo = () => {
     });
 }
 
-export const getGitDiffSince = (since = '1 day ago') => {
+export const getGitDiffSince = (gitParams) => {
   return checkIsGitRepo().then((isGitRepo) => {
     if (isGitRepo) {
-      return logseq.Git.execCommand(['log', `--since="${since}"`, '-p']);
+      return logseq.Git.execCommand(gitParams);
     } else {
       throw new Error(notAGitRepoErrorMsg);
     }
