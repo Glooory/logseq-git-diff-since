@@ -47,6 +47,12 @@ const queryGitDiffSince = () => {
     });
 }
 
+const resetAndQuery = () => {
+  currTimeDuration.value = 1;
+  currTimeUnit.value = timeUnits[0];
+  queryGitDiffSince();
+}
+
 const onTimeDurationChange = () => {
   queryGitDiffSince();
 }
@@ -74,6 +80,7 @@ onMounted(() => {
     ready.value = true;
     queryGitDiffSince();
   }, 0);
+  logseq.App.onCurrentGraphChanged(resetAndQuery);
 });
 </script>
 
